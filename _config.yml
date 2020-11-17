@@ -26,8 +26,9 @@ github_username:  marceline-cramer
 
 # Build settings
 markdown: kramdown
-theme: minima
+theme: jekyll-theme-midnight
 plugins:
+  - github-pages
   - jekyll-feed
 
 # Exclude from processing.
