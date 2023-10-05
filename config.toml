@@ -8,4 +8,6 @@ highlight_code = true
 
 [extra]
 author = "Marceline Cramer"
+accent_color = "red"
+background_color = "red"
 logo_text = "Planet Mars"
