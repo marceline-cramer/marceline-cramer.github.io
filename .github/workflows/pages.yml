@@ -1,0 +1,28 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: typst-community/setup-typst@v4
+    - run: mkdir public
+    - run: typst compile index.typ --features html public/index.html
+    - uses: actions/upload-pages-artifact@v4
+      with:
+        path: public
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - uses: actions/deploy-pages@v4
