@@ -2,20 +2,23 @@
 
 #html.elem("style", read("style.css"))
 
-#let section(title, ..content) = {
-  html.elem("table", html.elem("tr", [
-    #html.elem("td", html.elem("p", attrs: (class: ".section-heading"), title))
-    #html.elem("td", box(..content))
-  ]))
-}
+#show heading: c => h(".heading", c)
+#show math.equation: html.frame
+#show math.equation.where(block: true): h.with(".center-content")
 
-#section([Hi.], [
-  I'm Mars. I write a lot of code and I like to think I'm good at math.
+= Hi.
 
-  It highly annoys me when people write "alot" instead of "a lot," "too" when they mean
-  "to," or "loose" when they mean "lose."
+I'm Mars. I write a lot of code and I like to think I'm good at math.
 
-  I really like #link("https://www.brailleinstitute.org/freefont/", [Atkinson Hyperlegible]).
-  Please consider using it!
-])
+It highly annoys me when people write "alot" instead of "a lot," "too" when they mean
+"to," or "loose" when they mean "lose."
 
+I really like #link("https://www.brailleinstitute.org/freefont/", [Atkinson Hyperlegible]).
+Please consider using it!
+
+My favorite color scheme is #link("https://github.com/sainnhe/gruvbox-material", [Gruvbox Material]).
+It's what this site is themed with... assuming you're not messing with the CSS.
+
+Some Typst math:
+
+$ overline(A B) = overline(A) + overline(B) $

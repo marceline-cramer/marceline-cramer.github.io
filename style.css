@@ -1,21 +1,90 @@
 * {
   font-family: Atkinson Hyperlegible Next, Sans Serif;
+  font-size: 14pt;
+
+  /** default all margins to 0 */
+  margin: 0;
+
+  /** size of left margin (titles) */
+  --left-margin-size: 10em;
+
+  /** size of right margin (notes) */
+  --right-margin-size: 10em;
+}
+
+/** Default to dark mode colors */
+* {
+  /** Gruvbox Material dark hard */
+  --bg0: #1d2021;
+  --fg0: #d4be98;
+  --blue: #7daea3;
+  --purple: #d3869b;
+}
+
+/* Light mode color override */
+@media (prefers-color-scheme: light) {
+  * {
+    /** Gruvbox Material light hard */
+    --bg0: #f9f5d7;
+    --fg0: #654735;
+    --blue: #45707a;
+    --purple: #945e80;
+  }
 }
 
 body {
-  max-width: 600px;
-  margin: 0 auto 0;
+  max-width: 50em;
+  margin: 1em auto 1em;
   padding: 1em;
+  color: var(--fg0);
+  background-color: var(--bg0);
+}
+
+a {
+  text-decoration: none;
+  color: var(--blue);
+}
+
+a:visited {
+  color: var(--purple);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p,
+.typst-frame,
+.center-content {
+  padding: 0 1em;
+  margin-left: var(--left-margin-size);
+  margin-right: var(--right-margin-size);
 }
 
 p {
-  font-size: 14pt;
   text-align: left;
-  margin: .8em 1em;
+  line-height: 2em;
+  margin-bottom: 1em;
 }
 
-.section-heading {
+svg {
+  >g {
+    transform: scale(1.4);
+  }
+
+  .typst-text use {
+    fill: var(--fg0) !important;
+  }
+
+  .typst-shape {
+    stroke: var(--fg0) !important;
+  }
+}
+
+/** TODO: disable floating on mobile */
+.heading {
+  float: left;
   text-align: right;
-  border-bottom: 2px solid white;
-  width: 100px;
+  width: var(--left-margin-size);
+  line-height: 2em;
 }
