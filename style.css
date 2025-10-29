@@ -1,0 +1,21 @@
+* {
+  font-family: Atkinson Hyperlegible Next, Sans Serif;
+}
+
+body {
+  max-width: 600px;
+  margin: 0 auto 0;
+  padding: 1em;
+}
+
+p {
+  font-size: 14pt;
+  text-align: left;
+  margin: .8em 1em;
+}
+
+.section-heading {
+  text-align: right;
+  border-bottom: 2px solid white;
+  width: 100px;
+}
