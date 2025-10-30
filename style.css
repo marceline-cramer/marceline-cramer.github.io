@@ -33,8 +33,9 @@ body {
   color: var(--fg0);
   background-color: var(--bg0);
   display: grid;
-  grid-template-columns: 1fr [heading] 10em [content] 30em [notes] 10em 1fr;
-  column-gap: 1em;
+  grid-template-columns: 1fr [heading] 15em [content] 30em [notes] 15em 1fr;
+  align-items: baseline;
+  gap: 1em;
 }
 
 a {
@@ -52,36 +53,46 @@ a:hover {
 
 p,
 ul,
-.typst-frame,
-.center-content {
-  grid-column: content;
+table {
   line-height: 2em;
   text-align: left;
+  grid-column: content;
 }
 
-.center-content {
+table {
+  border: 2px solid;
+  border-spacing: 0;
+  align-items: center;
+}
+
+th,
+td {
+  border: 1px solid;
+  padding: .5em;
+}
+
+ul {
+  list-style-position: inside;
+  padding: 0;
+  margin: 0;
+}
+
+.math-block {
   display: flex;
   justify-content: center;
-  margin-bottom: 1em;
+  grid-column: content;
 }
 
-p {
-  margin-bottom: 1em;
+.typst-frame {
+  zoom: 130%;
 }
 
-svg {
-  >g {
-    transform: scale(1.5);
-    transform-origin: bottom center;
-  }
+.typst-text use {
+  fill: var(--fg0);
+}
 
-  .typst-text use {
-    fill: var(--fg0);
-  }
-
-  .typst-shape {
-    stroke: var(--fg0);
-  }
+.typst-shape {
+  stroke: var(--fg0);
 }
 
 .heading {
