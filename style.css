@@ -100,13 +100,13 @@ ul {
 @media screen and (max-width: 54em) {
   body {
     margin: 1em;
-    display: inline-block;
+    grid-template-columns: [content] 30em;
   }
 
   .heading {
     text-align: left;
+    grid-column: content;
     width: 100%;
     border-bottom: 2px solid var(--grey0);
-    margin-bottom: 1em;
   }
 }
