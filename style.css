@@ -31,7 +31,8 @@ body {
   margin: 1em;
   color: var(--fg0);
   background-color: var(--bg0);
-  grid-template-columns: [center-left] 1fr [heading] 10em [gutter] 1em [content] 30em [notes] 10em [center-right] 1fr;
+  grid-template-columns: 1fr [heading] 10em [content] 30em [notes] 10em 1fr;
+  column-gap: 1em;
 }
 
 a {
@@ -51,8 +52,7 @@ p,
 ul,
 .typst-frame,
 .center-content {
-  grid-column-start: content;
-  grid-column-end: content;
+  grid-column: content;
   line-height: 2em;
   text-align: left;
 }
@@ -82,8 +82,7 @@ svg {
 
 /** TODO: disable floating on mobile */
 .heading {
-  grid-column-start: heading;
-  grid-column-end: heading;
+  grid-column: heading;
   text-align: right;
   line-height: 2em;
 }
