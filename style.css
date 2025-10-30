@@ -83,10 +83,6 @@ ul {
   grid-column: content;
 }
 
-.typst-frame {
-  zoom: 130%;
-}
-
 .typst-text use {
   fill: var(--fg0);
 }
