@@ -4,12 +4,6 @@
 
   /** default all margins to 0 */
   margin: 0;
-
-  /** size of left margin (titles) */
-  --left-margin-size: 10em;
-
-  /** size of right margin (notes) */
-  --right-margin-size: 10em;
 }
 
 /** Default to dark mode colors */
@@ -33,11 +27,11 @@
 }
 
 body {
-  max-width: 50em;
-  margin: 1em auto 1em;
-  padding: 1em;
+  display: grid;
+  margin: 1em;
   color: var(--fg0);
   background-color: var(--bg0);
+  grid-template-columns: [center-left] 1fr [heading] 10em [gutter] 1em [content] 30em [notes] 10em [center-right] 1fr;
 }
 
 a {
@@ -54,14 +48,17 @@ a:hover {
 }
 
 p,
-li,
+ul,
 .typst-frame,
 .center-content {
-  padding-left: 1em;
+  grid-column-start: content;
+  grid-column-end: content;
   line-height: 2em;
   text-align: left;
-  margin-left: var(--left-margin-size);
-  margin-right: var(--right-margin-size);
+}
+
+.center-content {
+  margin: 0 auto 1em;
 }
 
 p,
@@ -71,22 +68,22 @@ p,
 
 svg {
   >g {
-    transform: scale(1.4);
+    transform: scale(1.5);
   }
 
   .typst-text use {
-    fill: var(--fg0) !important;
+    fill: var(--fg0);
   }
 
   .typst-shape {
-    stroke: var(--fg0) !important;
+    stroke: var(--fg0);
   }
 }
 
 /** TODO: disable floating on mobile */
 .heading {
-  float: left;
+  grid-column-start: heading;
+  grid-column-end: heading;
   text-align: right;
-  width: var(--left-margin-size);
   line-height: 2em;
 }
