@@ -3,6 +3,7 @@
 #html.elem("style", read("style.css"))
 
 #set heading(numbering: "1a")
+#show math.equation: set text(font: "Noto Sans Math")
 #show heading: h.with(".heading")
 #show math.equation: e => box(html.frame(e))
 #show math.equation.where(block: true): h.with(".math-block")
