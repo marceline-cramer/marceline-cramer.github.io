@@ -6,26 +6,13 @@
   margin: 0;
 }
 
-/** Default to dark mode colors */
+/** Gruvbox Material dark hard */
 * {
-  /** Gruvbox Material dark hard */
   --bg0: #1d2021;
   --fg0: #d4be98;
   --grey0: #7c6f64;
   --blue: #7daea3;
   --purple: #d3869b;
-}
-
-/* Light mode color override */
-@media (prefers-color-scheme: light) {
-  * {
-    /** Gruvbox Material light hard */
-    --bg0: #f9f5d7;
-    --fg0: #654735;
-    --grey0: #a89984;
-    --blue: #45707a;
-    --purple: #945e80;
-  }
 }
 
 body {
@@ -53,7 +40,8 @@ a:hover {
 
 p,
 ul,
-table {
+table,
+.typst-frame {
   line-height: 2em;
   text-align: left;
   grid-column: content;
@@ -77,18 +65,10 @@ ul {
   margin: 0;
 }
 
-.math-block {
+.center-content {
   display: flex;
   justify-content: center;
   grid-column: content;
-}
-
-.typst-text use {
-  fill: var(--fg0);
-}
-
-.typst-shape {
-  stroke: var(--fg0);
 }
 
 .heading {

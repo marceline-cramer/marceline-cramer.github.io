@@ -1,11 +1,16 @@
 #import "@preview/hyperscript:0.1.0": h
+#import "@preview/fletcher:0.5.8": node, edge, diagram as baseDiagram
 
 #html.elem("style", read("style.css"))
 
+#let fg = rgb("#d4be98") // TODO: find way to recolor SVGs
+#set text(fill: fg)
 #set heading(numbering: "1a")
 #show heading: h.with(".heading")
 #show math.equation: e => box(html.frame(e))
-#show math.equation.where(block: true): h.with(".math-block")
+#show math.equation.where(block: true): h.with(".center-content")
+
+#let diagram(..args) = h(".center-content", html.frame(baseDiagram(edge-stroke: fg, ..args)))
 
 = Hi.
 
@@ -55,9 +60,22 @@ $
   eta &: I -> M & "unit"
 $
 
-There's also a pentagon diagram that needs to be commutative for an object
-to qualify as a monoid, but I haven't figured out how to draw it in pure Typst
-quite yet.
+such that
+
+#diagram(cell-size: 15mm, $
+  (M times.o M) times.o M
+    edge("d", mu times.o 1, ->)
+    edge("r", alpha, ->)
+  & M times.o (M times.o M)
+    edge("r", 1 times.o mu, ->)
+  & M times.o M
+    edge("d", mu, ->)
+  \ M times.o M
+    edge("r,r", mu, ->)
+  && M
+$)
+
+commutes given the identity morphism $1$.
 
 Alternative interpretations of monoids:
 - a semigroup with an identity element
