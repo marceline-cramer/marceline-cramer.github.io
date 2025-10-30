@@ -54,16 +54,18 @@ a:hover {
 }
 
 p,
+li,
 .typst-frame,
 .center-content {
-  padding: 0 1em;
+  padding-left: 1em;
+  line-height: 2em;
+  text-align: left;
   margin-left: var(--left-margin-size);
   margin-right: var(--right-margin-size);
 }
 
-p {
-  text-align: left;
-  line-height: 2em;
+p,
+.typst-frame {
   margin-bottom: 1em;
 }
 

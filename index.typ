@@ -10,8 +10,7 @@
 
 I'm Mars. I write a lot of code and I like to think I'm good at math.
 
-It highly annoys me when people write "alot" instead of "a lot," "too" when they mean
-"to," or "loose" when they mean "lose."
+I like minimalism. Can you tell?
 
 I really like #link("https://www.brailleinstitute.org/freefont/", [Atkinson Hyperlegible]).
 Please consider using it!
@@ -22,3 +21,13 @@ It's what this site is themed with... assuming you're not messing with the CSS.
 Some Typst math:
 
 $ overline(A B) = overline(A) + overline(B) $
+
+It highly annoys me when people write "alot" instead of "a lot," "too" when they mean
+"to," or "loose" when they mean "lose."
+
+= Site to-do list:
+
+- bundle Atkinson Hyperlegible in static files
+- disable floating margin elements in narrow viewports (and mobile)
+- add a basic personal directory (Discord, GitHub, LinkedIn)
+- add a new Typst-based resume
