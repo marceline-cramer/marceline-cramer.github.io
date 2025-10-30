@@ -59,10 +59,19 @@ td {
   padding: .5em;
 }
 
-ul {
+ul,
+ol {
   list-style-position: inside;
-  padding: 0;
-  margin: 0;
+  padding-left: 0;
+
+  ul,
+  ol {
+    padding-left: 2em;
+  }
+}
+
+li>p {
+  display: inline;
 }
 
 .center-content {

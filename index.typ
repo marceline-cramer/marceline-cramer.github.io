@@ -34,11 +34,12 @@ It highly annoys me when people write "alot" instead of "a lot," "too" when they
 - bundle Atkinson Hyperlegible in static files
 - add a basic personal directory (Discord, GitHub, LinkedIn)
 - add a new Typst-based resume
-- add an icon (ringed planet emoji is fine)
-- support #link("https://ogp.me", [Open Graph]) for pretty link embeds
-- disable Dark Reader in dark mode
 - render more than just the index page
 - make headings links to themselves
+- add custom `<head>` contents, then...
+  - support #link("https://ogp.me", [Open Graph]) for pretty link embeds
+  - disable Dark Reader in dark mode
+  - add a favicon (ringed planet emoji is fine)
 
 = Unorganized math
 
