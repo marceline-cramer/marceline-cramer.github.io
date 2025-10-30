@@ -28,7 +28,6 @@ It highly annoys me when people write "alot" instead of "a lot," "too" when they
 = Site to-do list:
 
 - bundle Atkinson Hyperlegible in static files
-- disable floating margin elements in narrow viewports (and mobile)
 - add a basic personal directory (Discord, GitHub, LinkedIn)
 - add a new Typst-based resume
 - add an icon (ringed planet emoji is fine)

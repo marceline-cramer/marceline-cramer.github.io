@@ -11,6 +11,7 @@
   /** Gruvbox Material dark hard */
   --bg0: #1d2021;
   --fg0: #d4be98;
+  --grey0: #7c6f64;
   --blue: #7daea3;
   --purple: #d3869b;
 }
@@ -21,16 +22,17 @@
     /** Gruvbox Material light hard */
     --bg0: #f9f5d7;
     --fg0: #654735;
+    --grey0: #a89984;
     --blue: #45707a;
     --purple: #945e80;
   }
 }
 
 body {
-  display: grid;
   margin: 1em;
   color: var(--fg0);
   background-color: var(--bg0);
+  display: grid;
   grid-template-columns: 1fr [heading] 10em [content] 30em [notes] 10em 1fr;
   column-gap: 1em;
 }
@@ -58,17 +60,19 @@ ul,
 }
 
 .center-content {
-  margin: 0 auto 1em;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
 }
 
-p,
-.typst-frame {
+p {
   margin-bottom: 1em;
 }
 
 svg {
   >g {
     transform: scale(1.5);
+    transform-origin: bottom center;
   }
 
   .typst-text use {
@@ -80,9 +84,21 @@ svg {
   }
 }
 
-/** TODO: disable floating on mobile */
 .heading {
   grid-column: heading;
   text-align: right;
   line-height: 2em;
+}
+
+@media screen and (max-width: 54em) {
+  body {
+    display: inline-block;
+  }
+
+  .heading {
+    text-align: left;
+    width: 100%;
+    border-bottom: 2px solid var(--grey0);
+    margin-bottom: 1em;
+  }
 }
