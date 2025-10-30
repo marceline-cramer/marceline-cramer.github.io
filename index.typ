@@ -32,3 +32,4 @@ It highly annoys me when people write "alot" instead of "a lot," "too" when they
 - add a new Typst-based resume
 - add an icon (ringed planet emoji is fine)
 - support #link("https://ogp.me", [Open Graph]) for pretty link embeds
+- disable Dark Reader in dark mode
