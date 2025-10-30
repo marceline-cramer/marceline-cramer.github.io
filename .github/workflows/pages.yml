@@ -10,7 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: typst-community/setup-typst@v4
-    - run: sudo apt-get install fonts-noto-core
     - run: mkdir public
     - run: typst compile index.typ --features html public/index.html
     - uses: actions/upload-pages-artifact@v4
