@@ -11,7 +11,7 @@ body {
   color: var(--fg0);
   background-color: var(--bg0);
   display: grid;
-  grid-template-columns: 1fr [heading] 15em [content] 30em [notes] 15em 1fr;
+  grid-template-columns: 1fr [heading] 15em [content] 40em [notes] 15em 1fr;
   align-items: baseline;
   gap: 1em;
 }
@@ -39,6 +39,7 @@ table,
 }
 
 .center-content svg {
+  max-width: 100%;
   font-size: 120%;
 }
 
@@ -85,7 +86,7 @@ li>p {
 @media screen and (max-width: 54em) {
   body {
     margin: 1em;
-    grid-template-columns: [content] 30em;
+    grid-template-columns: [content] 100%;
   }
 
   .heading {
