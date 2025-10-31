@@ -1,16 +1,45 @@
 #import "@preview/hyperscript:0.1.0": h
 #import "@preview/fletcher:0.5.8": node, edge, diagram as baseDiagram
 
-#html.elem("style", read("style.css"))
+// Gruvbox Material dark hard
+// TODO: find way to recolor SVGs
+#let paletteHex = (
+  bg0: "#1d2021",
+  fg0: "#d4be98",
+  grey0: "#7c6f64",
+  red: "#ea6962",
+  green: "#a9b665",
+  blue: "#7daea3",
+  yellow: "#d8a657",
+  purple: "#d3869b",
+  orange: "#e78a43",
+  aqua: "#89b482",
+)
 
-#let fg = rgb("#d4be98") // TODO: find way to recolor SVGs
-#set text(fill: fg)
+#html.elem("style", {
+  "* {";
+  for (key, val) in paletteHex {
+    [#"--"#key: #val ;];
+  }
+  "}";
+
+  read("style.css");
+})
+
+#let palette = {
+  paletteHex
+  .pairs()
+  .map(((key, val)) => (key, rgb(val)))
+  .fold((:), (palette, (key, val)) => {palette.insert(key, val); palette})
+}
+
+#set text(fill: palette.fg0)
 #set heading(numbering: "1a")
 #show heading: h.with(".heading")
 #show math.equation: e => box(html.frame(e))
 #show math.equation.where(block: true): h.with(".center-content")
 
-#let diagram(..args) = h(".center-content", html.frame(baseDiagram(edge-stroke: fg, ..args)))
+#let diagram(..args) = h(".center-content", html.frame(baseDiagram(edge-stroke: palette.fg0, ..args)))
 
 = Hi.
 
@@ -124,3 +153,53 @@ An *endofunctor* is just a functor from a category to itself.
 Given a category $C$, an endofunctor $f$ can be defined as $f : C -> C$.
 
 As in: "Endofunctor? I hardly know her!"
+
+== Algebra Cube
+
+#diagram(
+  spacing: (1cm, 2cm),
+  edge-stroke: 1pt,
+  crossing-thickness: 5,
+  mark-scale: 70%,
+  node-outset: 2pt,
+  node((0,0), "magma"),
+
+  node((-1,1), "semigroup"),
+  node(( 0,1), "unital magma"),
+  node((+1,1), "quasigroup"),
+
+  node((-1,2), "monoid"),
+  node(( 0,2), "inverse semigroup"),
+  node((+1,2), "loop"),
+
+  node(( 0,3), "group"),
+
+  {
+    let quad(a, b, label, paint, ..args) = {
+      edge(
+        a, b,
+        text(paint, label), "-|>",
+        stroke: paint, label-side: center,
+        label-fill: palette.bg0, crossing-fill: palette.bg0,
+        ..args
+      )
+    }
+
+    quad((0,0), (-1,1), "Assoc", palette.blue)
+    quad((0,1), (-1,2), "Assoc", palette.blue, label-pos: 0.3)
+    quad((1,2), (0,3), "Assoc", palette.blue)
+
+    quad((0,0), (0,1), "Id", palette.red)
+    quad((-1,1), (-1,2), "Id", palette.red, label-pos: 0.3)
+    quad((+1,1), (+1,2), "Id", palette.red, label-pos: 0.3)
+    quad((0,2), (0,3), "Id", palette.red)
+
+    quad((0,0), (1,1), "Div", palette.yellow)
+    quad((-1,1), (0,2), "Div", palette.yellow, label-pos: 0.3, "crossing")
+
+    quad((-1,2), (0,3), "Inv", palette.green)
+    quad((0,1), (+1,2), "Inv", palette.green, label-pos: 0.3)
+
+    quad((1,1), (0,2), "Assoc", palette.blue, label-pos: 0.3, "crossing")
+  },
+)

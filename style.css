@@ -6,15 +6,6 @@
   margin: 0;
 }
 
-/** Gruvbox Material dark hard */
-* {
-  --bg0: #1d2021;
-  --fg0: #d4be98;
-  --grey0: #7c6f64;
-  --blue: #7daea3;
-  --purple: #d3869b;
-}
-
 body {
   margin: 1em 0;
   color: var(--fg0);
@@ -88,6 +79,7 @@ li>p {
   grid-column: heading;
   text-align: right;
   line-height: 2em;
+  margin: 0 0 auto;
 }
 
 @media screen and (max-width: 54em) {
