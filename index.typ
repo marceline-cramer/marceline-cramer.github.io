@@ -1,6 +1,7 @@
 #import "@preview/hyperscript:0.1.0": h
 #import "@preview/fletcher:0.5.8": node, edge, diagram as baseDiagram
 #import "@preview/swank-tex:0.1.0": *
+#import "@preview/curryst:0.5.1"
 
 // Gruvbox Material dark hard
 // TODO: find way to recolor SVGs
@@ -42,6 +43,8 @@
 #show math.equation.where(block: true): h.with(".center-content")
 
 #let diagram(..args) = h(".center-content", html.frame(baseDiagram(edge-stroke: palette.fg0, ..args)))
+
+#let prooftree(..args) = h(".center-content", html.frame(curryst.prooftree(stroke: palette.fg0, ..args)))
 
 = Hi.
 
@@ -245,6 +248,138 @@ As in: "Endofunctor? I hardly know her!"
     quad((1,1), (0,2), "Assoc", palette.blue, label-pos: 0.3, "crossing")
   },
 )
+
+= Satisfiability
+
+I really like #link("https://en.wikipedia.org/wiki/Boolean_satisfiability_problem")[SAT solving].
+
+== Parallel SAT? Maybe?
+
+First, let's suppose #link(<assignment-power-sets>)[power sets of partial
+assignments] as the deciding factor for satisfiability.
+
+DPLL and CDCL utilize procedures to disprove partial assignments based on these
+power sets. This is the logical precedence for their backtracking. The procedure
+to decide satisfiability for any partial assignment or ancestral line along any
+node of the search tree is to prove that its search subtree is unsatisfiable.
+Of course, _those_ children can only be found unsatisfiable if for every child
+node's partial assignment, there exists a clause that refutes it.
+
+DPLL will naively traverse all partial assignments based only on refutations
+from the initial set of clauses. This does not synthesize any new clauses using
+resolution while remaining a complete search. From a power sets perspective,
+this is because the power sets of total assignments contain all of the clauses
+in the base SAT instance.
+
+CDCL will use the resolution rule to construct new clauses as they are
+encountered. However, because of the recursive nature of these decision
+procedures, this discovery of refutation does not lend itself to
+parallelization. Until a conflict that is only resolved by application of the
+resolution rule is reached, partial assignments may be formed along the depth
+of the search tree that may be proved unsatisfiable by a small number of
+queries into the fixpoint resolution predicate.
+
+Cube and conquer (C&C) is effective at leveraging multiple processors to solve
+a single SAT problem. However, because each cube is solved via DPLL or CDCL,
+reducing a SAT problem to cubes still introduces implicit redundancy in
+computation.
+
+We now have some lemmas for constructing a parallel SAT solver:
++ The #link(<fp-resolution>)[fixpoint resolution predicate] is decidable,
+  finite, and complete for deciding reachability of a clause via resolution.
++ The #link(<assignment-power-sets>)[power set of a negated partial assignment]
+  must be disjoint from the set of found clauses.
+
+== Assignment power sets <assignment-power-sets>
+
+Given some variables $a$, $b$, and $c$, the set of possible refuting clauses
+for each partial assignment listed below is shown:
+#let unsat = $cancel(angle: #20deg, tack.l.long)$
+$
+  C_1 &=& {a}    &unsat {not a}, emptyset \
+  C_2 &=& {b}    &unsat {not b}, emptyset \
+  C_3 &=& {b, c} &unsat {not b, not c}, {not b}, {not c}, emptyset \
+$
+
+In other words, for any partial assignment, the set of clauses that can prove
+unsatisfiability of that partial assignment is the power set of that partial
+assignment's negation. Therefore, any partial solution to a satisfiability
+problem can be disproven by finding a clause that contains only a subset of its
+negated literals.
+
+Because #link(<fp-resolution>)[the fixpoint resolution predicate]
+$|ell|^tack.b$ can find all clauses that are logical consequences of other
+clauses, proving a partial assignment is satisfiable is equivalent to proving
+that the power set of the negated assignment is disjoint with $|ell|^tack.b$.
+
+We also have an inductive means of constructing complete power sets:
+$
+  PP(emptyset) &= emptyset \
+  PP(C union {ell}) &= PP(C) union (PP(C) times {ell})
+$
+
+== Fixpoint resolution <fp-resolution>
+
+Defining a fixpoint ruleset for an instance $phi$ using
+#link(<resolution>)[the resolution rule] and first-order Horn clauses:
+#let fixedRes = $|ell|^tack.b$
+$
+  fixedRes(C) &<- C in phi \
+  fixedRes(Gamma_1 union Gamma_2) &<-
+    fixedRes(Gamma_1 union {ell}) and
+    fixedRes(Gamma_2 union {not ell})
+$
+
+We can reframe this ruleset for non-empty clauses in terms of any literal $m in phi$:
+$
+  fixedRes(Gamma_1 union Gamma_2 union {m})
+    & equiv (Gamma_1 union Gamma_2 union {m}) in phi \
+    & or fixedRes(Gamma_1 union {ell}) and fixedRes(Gamma_2 union {ell} union {m}) \
+    & or fixedRes(Gamma_1 union {ell} union {m}) and fixedRes(Gamma_2 union {ell})
+$
+
+and for the empty clause:
+$
+  fixedRes(emptyset)
+    & equiv emptyset in phi \
+    & or fixedRes({ell}) and fixedRes({not ell})
+$
+
+Note that for the latter rule:
++ The empty clause rule is complete for SAT because it is equivalent to
+  evaluating the Davis-Putnam satisfiability procedure.
++ Because the empty clause rule is equivalent to DP, it is exponential in memory.
++ Querying the satisfiability of the empty clause is unreachable by querying for
+  a non-empty clause.
+
+== Resolution <resolution>
+
+Given some variable $ell$:
+#prooftree(curryst.rule(
+  name: $|ell|$,
+  $Gamma_1 union Gamma_2$,
+  $Gamma_1 union { ell }$,
+  $Gamma_2 union { not ell }$,
+))
+
+Also note that due to the law of the excluded middle, resolution on two or
+more opposing variable assignments is a tautology:
+#prooftree(curryst.rule(
+  $tack.b$,
+  curryst.rule(
+    $Gamma_1 union Gamma_2 union tack.b$,
+    curryst.rule(
+      name: $|ell|$,
+      $Gamma_1 union Gamma_2 union {m, not m}$,
+      $Gamma_1 union { ell, m }$,
+      $Gamma_2 union { not ell, not m }$,
+))))
+
+The resolution rule itself is monotonic: every clause inferred through
+resolution is merely _implied_ by the two clauses it's constructed from.
+Therefore, assuming no means of eliminating subsumed clauses, the resolution
+rule as a means of inferring new clauses is valid if resolved clauses are
+directly added back to the set of known clauses.
 
 = Rhizomatic thinking <rhizomatic-thinking>
 
