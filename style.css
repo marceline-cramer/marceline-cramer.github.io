@@ -4,6 +4,12 @@
 
   /** default all margins to 0 */
   margin: 0;
+
+  /** common styling configuration */
+  --note-color: var(--grey0);
+  --note-border: 1px solid var(--grey1);
+  --note-padding: .5em;
+  --note-margin: .5em;
 }
 
 body {
@@ -83,6 +89,15 @@ li>p {
   margin: 0 0 auto;
 }
 
+.note {
+  grid-column: notes;
+  margin: .33em 0 auto;
+  line-height: 1.5em;
+  color: var(--note-color);
+  padding-left: var(--note-padding);
+  border-left: var(--note-border);
+}
+
 @media screen and (max-width: 54em) {
   body {
     margin: 1em;
@@ -95,5 +110,12 @@ li>p {
     grid-column: content;
     width: 100%;
     border-bottom: 2px solid var(--grey0);
+  }
+
+  .note {
+    grid-column: content;
+    margin: 0 var(--note-margin);
+    padding: var(--note-padding);
+    border: var(--note-border);
   }
 }

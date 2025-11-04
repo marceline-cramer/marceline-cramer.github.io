@@ -9,6 +9,7 @@
   bg0: "#1d2021",
   fg0: "#d4be98",
   grey0: "#7c6f64",
+  grey1: "#928374",
   red: "#ea6962",
   green: "#a9b665",
   blue: "#7daea3",
@@ -45,6 +46,8 @@
 #let diagram(..args) = h(".center-content", html.frame(baseDiagram(edge-stroke: palette.fg0, ..args)))
 
 #let prooftree(..args) = h(".center-content", html.frame(curryst.prooftree(stroke: palette.fg0, ..args)))
+
+#let note = h.with(".note")
 
 = Hi.
 
@@ -176,6 +179,8 @@ $
   I &: C & "identity object"
 $
 
+#note[The monoidal product is also known as the *tensor product*.]
+
 and isomorphisms
 
 $
@@ -184,12 +189,10 @@ $
   rho_A &: A times.o I tilde.equiv A & "right unitor"
 $
 
+#note[A mnemonic for the names of the unitors is _left_ for _lambda_ and _right_ for _rho_.]
+
 This is just a fancy way of saying that the monoidal product is associative and
 passes through values on either operand when the other operand is the identity object.
-
-A mnemonic for the names of the unitors is _left_ for _lambda_ and _right_ for _rho_.
-
-The monoidal product is also known as the *tensor product*.
 
 == Endofunctor <endofunctor>
 
@@ -289,6 +292,31 @@ We now have some lemmas for constructing a parallel SAT solver:
   finite, and complete for deciding reachability of a clause via resolution.
 + The #link(<assignment-power-sets>)[power set of a negated partial assignment]
   must be disjoint from the set of found clauses.
+
+== Redundancy in DPLL <dpll-redundancy>
+
+I would argue that there is redundant computation in DPLL.
+
+Depth-first traversal of the search tree extends existing partial assignments.
+If the principal mode of evaluating the unsatisfiability of partial assignments
+does not consider #link(<resolution>)[resolution] then this cannot be
+considered to duplicate work.
+
+For a unit partial assignment $rho = {m}$, the
+#link(<assignment-power-sets>)[set of refuting clauses] is ${{not m},
+emptyset}$.
+
+
+We have a split rule for variables $ell$ which can resolve to the empty clause:
+$
+  Gamma'(ell) & = Gamma({not ell}) and Gamma({ell})
+$
+
+Deciding if the empty clause $emptyset$ can be inferred via resolution is exponential in memory:
+#let fixedRes = math.Gamma // $|ell|^tack.b$
+$
+  fixedRes(emptyset) & = (emptyset in C(phi)) or or.big_ell^(V(phi)) Gamma'(ell) \
+$
 
 == Assignment power sets <assignment-power-sets>
 
@@ -416,9 +444,9 @@ $
 *Rhizomatic thought* is thinking that sporadically networks different ideas
 orthogonally to conceptual hierarchies (aka *arborescent thought*).
 
-There's more to the concept but I'm doing other things at time of writing.
+#note[There's more to the concept but I'm doing other things at time of writing.
 Read #link("https://en.wikipedia.org/wiki/Rhizomatic_learning")[the Wikipedia page]
-for more info.
+for more info.]
 
 #table(
   columns: 2,
