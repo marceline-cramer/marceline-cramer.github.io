@@ -87,6 +87,7 @@ li>p {
   display: flex;
   justify-content: center;
   grid-column: content;
+  align-self: end;
 }
 
 .heading,
