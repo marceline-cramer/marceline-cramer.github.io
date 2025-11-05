@@ -1,6 +1,6 @@
 #import "@preview/hyperscript:0.1.0": h
 #import "@preview/swank-tex:0.1.0": *
-#import "common.typ": note, page, palette, site
+#import "common.typ": note, page, palette, site, title
 
 #set text(fill: palette.fg0)
 #set heading(numbering: "1a")
@@ -8,6 +8,11 @@
 #show html.frame: box
 #show math.equation: html.frame
 #show math.equation.where(block: true): h.with(".center-content")
+
+#show heading.where(depth: 1): it => {
+  title.update(it.body)
+  it
+}
 
 = Hi.
 

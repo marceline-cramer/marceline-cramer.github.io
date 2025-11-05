@@ -28,15 +28,59 @@
     })
 }
 
-#let pageLabels = state("common-page-labels", (:))
+#let pageInfo = state("common-page-info", (:))
+#let links = state("common-links")
+#let title = state("common-title")
 
-#let page(id) = context {
-  let page = include "pages/" + id + ".typ"
-  [#page #label(id)]
-  pageLabels.update(labels => {
-    labels.insert(id, label(id))
-    labels
-  })
+#let showBacklinks(dst) = context {
+  let backlinks = ()
+  for (src, info) in pageInfo.final() {
+    if info.links == none {
+      continue
+    }
+
+    for link in info.links {
+      if link == dst {
+        backlinks.push(info)
+      }
+    }
+  }
+
+  if backlinks == () {
+    return
+  }
+
+  heading(depth: 2, [Backlinks])
+
+  for backlink in backlinks {
+    list(link(backlink.label, backlink.title))
+  }
+}
+
+#let page(id) = {
+  links.update(())
+  title.update([\<no title\>])
+
+  [
+    #include "pages/" + id + ".typ"
+    #label(id)
+  ]
+
+  showBacklinks(id)
+
+  context {
+    let info = (
+      id: id,
+      label: label(id),
+      links: links.get(),
+      title: title.get(),
+    )
+
+    pageInfo.update(labels => {
+      labels.insert(id, info)
+      labels
+    })
+  }
 }
 
 #let site = context {
@@ -53,9 +97,11 @@
 
 #let note = h.with(".note")
 
-#let pageLink(id, content) = context link(pageLabels.final().at(id), content)
+#let pageLink(id, content) = {
+  links.update(tail => (id, ..tail))
+  context link(pageInfo.final().at(id).label, content)
+}
 
 #let diagram(..args) = h(".center-content", html.frame(fletcher.diagram(edge-stroke: palette.fg0, ..args)))
 
 #let prooftree(..args) = h(".center-content", html.frame(curryst.prooftree(stroke: palette.fg0, ..args)))
-
