@@ -1,6 +1,6 @@
 #import "../common.typ": *
 
-= Rhizomatic thinking <rhizomatic-thinking>
+= Rhizomatic thinking
 
 *Rhizomatic thought* is thinking that sporadically networks different ideas
 orthogonally to conceptual hierarchies (aka *arborescent thought*).

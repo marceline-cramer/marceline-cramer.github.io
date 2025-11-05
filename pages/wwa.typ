@@ -1,9 +1,9 @@
 #import "../common.typ": *
 
-= Fixpoint resolution <fp-resolution>
+= Fixpoint resolution
 
 Defining a fixpoint ruleset for an instance $phi$ using
-#link(<resolution>)[the resolution rule] and first-order Horn clauses:
+#pageLink("rag")[the resolution rule] and first-order Horn clauses:
 #let fixedRes = $Gamma^tack.b$
 $
                       fixedRes(C) & <- C in phi \

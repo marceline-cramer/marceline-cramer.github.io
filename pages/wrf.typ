@@ -1,6 +1,6 @@
 #import "../common.typ": *
 
-= Assignment power sets <assignment-power-sets>
+= Assignment power sets
 
 Given some variables $a$, $b$, and $c$, the set of possible refuting clauses
 for each partial assignment listed below is shown:
@@ -17,7 +17,7 @@ assignment's negation. Therefore, any partial solution to a satisfiability
 problem can be disproven by finding a clause that contains only a subset of its
 negated literals.
 
-Because #link(<fp-resolution>)[the fixpoint resolution predicate]
+Because #pageLink("wwa")[the fixpoint resolution predicate]
 $|ell|^tack.b$ can find all clauses that are logical consequences of other
 clauses, proving a partial assignment is satisfiable is equivalent to proving
 that the power set of the negated assignment is disjoint with $|ell|^tack.b$.

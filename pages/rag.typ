@@ -1,6 +1,6 @@
 #import "../common.typ": *
 
-= Resolution <resolution>
+= Resolution
 
 Given some variable $ell$:
 #prooftree(curryst.rule(
