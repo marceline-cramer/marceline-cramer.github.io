@@ -1,5 +1,5 @@
 #import "@preview/hyperscript:0.1.0": h
-#import "@preview/fletcher:0.5.8": node, edge, diagram as baseDiagram
+#import "@preview/fletcher:0.5.8": diagram as baseDiagram, edge, node
 #import "@preview/swank-tex:0.1.0": *
 #import "@preview/curryst:0.5.1"
 
@@ -33,7 +33,10 @@
   paletteHex
   .pairs()
   .map(((key, val)) => (key, rgb(val)))
-  .fold((:), (palette, (key, val)) => {palette.insert(key, val); palette})
+    .fold((:), (palette, (key, val)) => {
+      palette.insert(key, val)
+      palette
+    })
 }
 
 #set text(fill: palette.fg0)
@@ -106,7 +109,7 @@ broad audience. This should mean I can provide a more concrete foundation for
 my typically very abstract means of coming up with ideas and span lots of
 different fields with the same concepts.
 
-== Site to-do list:
+== Website to-do
 
 - bundle Atkinson Hyperlegible in static files
 - add a basic personal directory (Discord, GitHub, LinkedIn)
@@ -444,10 +447,6 @@ $
 *Rhizomatic thought* is thinking that sporadically networks different ideas
 orthogonally to conceptual hierarchies (aka *arborescent thought*).
 
-#note[There's more to the concept but I'm doing other things at time of writing.
-Read #link("https://en.wikipedia.org/wiki/Rhizomatic_learning")[the Wikipedia page]
-for more info.]
-
 #table(
   columns: 2,
   table.header([*Rhizomatic*], [*Arborescent*]),
@@ -456,3 +455,7 @@ for more info.]
   [Zettelkasten], [Johnny Decimal],
   [relational databases], [document stores],
 )
+
+#note[There's more to the concept but I'm doing other things at time of writing.
+  Read #link("https://en.wikipedia.org/wiki/Rhizomatic_learning")[the Wikipedia page]
+  for more info.]

@@ -5,11 +5,17 @@
   /** default all margins to 0 */
   margin: 0;
 
+  /** variables for body layout proportions */
+  --body-margin-width: 20ch;
+  --body-content-width: 60ch;
+  --body-row-gap: 1em;
+  --body-column-gap: 1ch;
+
   /** common styling configuration */
   --note-color: var(--grey0);
   --note-border: 1px solid var(--grey1);
-  --note-padding: .5em;
-  --note-margin: .5em;
+  --note-padding: 1ch;
+  --note-margin: 1ch;
 }
 
 body {
@@ -17,9 +23,10 @@ body {
   color: var(--fg0);
   background-color: var(--bg0);
   display: grid;
-  grid-template-columns: 1fr [heading] 15em [content] 30em [notes] 15em 1fr;
-  align-items: baseline;
-  gap: 1em;
+  grid-template-columns:
+    1fr [heading] var(--body-margin-width) var(--body-column-gap) [content] var(--body-content-width) var(--body-column-gap) [notes] var(--body-margin-width) 1fr;
+  align-items: first baseline;
+  row-gap: var(--body-row-gap);
 }
 
 a {
@@ -82,23 +89,26 @@ li>p {
   grid-column: content;
 }
 
+.heading,
+.note {
+  line-height: 1.5em;
+}
+
 .heading {
   grid-column: heading;
   text-align: right;
-  line-height: 2em;
-  margin: 0 0 auto;
+  border-right: 1px solid;
+  padding-right: 1ch;
 }
 
 .note {
   grid-column: notes;
-  margin: .33em 0 auto;
-  line-height: 1.5em;
   color: var(--note-color);
   padding-left: var(--note-padding);
   border-left: var(--note-border);
 }
 
-@media screen and (max-width: 54em) {
+@media screen and (max-width: 62em) {
   body {
     margin: 1em;
     grid-template-columns: [content] 100%;
@@ -108,7 +118,9 @@ li>p {
   .heading {
     text-align: left;
     grid-column: content;
+    margin: auto;
     width: 100%;
+    border: none;
     border-bottom: 2px solid var(--grey0);
   }
 
