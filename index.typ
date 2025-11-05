@@ -20,19 +20,19 @@
 )
 
 #html.elem("style", {
-  "* {";
+  "* {"
   for (key, val) in paletteHex {
-    [#"--"#key: #val ;];
+    [#"--"#key: #val ;]
   }
-  "}";
+  "}"
 
-  read("style.css");
+  read("style.css")
 })
 
 #let palette = {
   paletteHex
-  .pairs()
-  .map(((key, val)) => (key, rgb(val)))
+    .pairs()
+    .map(((key, val)) => (key, rgb(val)))
     .fold((:), (palette, (key, val)) => {
       palette.insert(key, val)
       palette
@@ -137,24 +137,24 @@ A *monoid* is an object $M$ within a #link(<monoidal-category>, [monoidal catego
 with the morphisms
 
 $
-  mu &: M times.o M -> M & "multiplication" \
-  eta &: I -> M & "unit"
+   mu & : M times.o M -> M & "multiplication" \
+  eta & : I -> M           &           "unit"
 $
 
 such that
 
-#diagram(cell-size: 15mm, $
-  (M times.o M) times.o M
+#diagram(
+  cell-size: 15mm,
+  $
+    (M times.o M) times.o M
     edge("d", mu times.o 1, ->)
-    edge("r", alpha, ->)
-  & M times.o (M times.o M)
-    edge("r", 1 times.o mu, ->)
-  & M times.o M
-    edge("d", mu, ->)
-  \ M times.o M
-    edge("r,r", mu, ->)
-  && M
-$)
+    edge("r", alpha, ->) & M times.o (M times.o M)
+                           edge("r", 1 times.o mu, ->) & M times.o M
+                                                         edge("d", mu, ->) \
+     M times.o M
+     edge("r,r", mu, ->) &                             &                 M
+  $,
+)
 
 commutes given the identity morphism $1$.
 
@@ -178,8 +178,8 @@ Examples of monoids:
 A *monoidal category* is a category $C$ with the morphisms
 
 $
-  times.o &: C times C -> C & "monoidal product" \
-  I &: C & "identity object"
+  times.o & : C times C -> C & "monoidal product" \
+        I & : C              &  "identity object"
 $
 
 #note[The monoidal product is also known as the *tensor product*.]
@@ -187,9 +187,9 @@ $
 and isomorphisms
 
 $
-  A_(A, B, C) &: A times.o (B times.o C) tilde.equiv (A times.o B) times.o C & "associator" \
-  lambda_A &: I times.o A tilde.equiv A & "left unitor" \
-  rho_A &: A times.o I tilde.equiv A & "right unitor"
+  A_(A, B, C) & : A times.o (B times.o C) tilde.equiv (A times.o B) times.o C &   "associator" \
+     lambda_A & : I times.o A tilde.equiv A                                   &  "left unitor" \
+        rho_A & : A times.o I tilde.equiv A                                   & "right unitor"
 $
 
 #note[A mnemonic for the names of the unitors is _left_ for _lambda_ and _right_ for _rho_.]
@@ -213,45 +213,49 @@ As in: "Endofunctor? I hardly know her!"
   crossing-thickness: 5,
   mark-scale: 70%,
   node-outset: 2pt,
-  node((0,0), "magma"),
+  node((0, 0), "magma"),
 
-  node((-1,1), "semigroup"),
-  node(( 0,1), "unital magma"),
-  node((+1,1), "quasigroup"),
+  node((-1, 1), "semigroup"),
+  node((0, 1), "unital magma"),
+  node((+1, 1), "quasigroup"),
 
-  node((-1,2), "monoid"),
-  node(( 0,2), "inverse semigroup"),
-  node((+1,2), "loop"),
+  node((-1, 2), "monoid"),
+  node((0, 2), "inverse semigroup"),
+  node((+1, 2), "loop"),
 
-  node(( 0,3), "group"),
+  node((0, 3), "group"),
 
   {
     let quad(a, b, label, paint, ..args) = {
       edge(
-        a, b,
-        text(paint, label), "-|>",
-        stroke: paint, label-side: center,
-        label-fill: palette.bg0, crossing-fill: palette.bg0,
-        ..args
+        a,
+        b,
+        text(paint, label),
+        "-|>",
+        stroke: paint,
+        label-side: center,
+        label-fill: palette.bg0,
+        crossing-fill: palette.bg0,
+        ..args,
       )
     }
 
-    quad((0,0), (-1,1), "Assoc", palette.blue)
-    quad((0,1), (-1,2), "Assoc", palette.blue, label-pos: 0.3)
-    quad((1,2), (0,3), "Assoc", palette.blue)
+    quad((0, 0), (-1, 1), "Assoc", palette.blue)
+    quad((0, 1), (-1, 2), "Assoc", palette.blue, label-pos: 0.3)
+    quad((1, 2), (0, 3), "Assoc", palette.blue)
 
-    quad((0,0), (0,1), "Id", palette.red)
-    quad((-1,1), (-1,2), "Id", palette.red, label-pos: 0.3)
-    quad((+1,1), (+1,2), "Id", palette.red, label-pos: 0.3)
-    quad((0,2), (0,3), "Id", palette.red)
+    quad((0, 0), (0, 1), "Id", palette.red)
+    quad((-1, 1), (-1, 2), "Id", palette.red, label-pos: 0.3)
+    quad((+1, 1), (+1, 2), "Id", palette.red, label-pos: 0.3)
+    quad((0, 2), (0, 3), "Id", palette.red)
 
-    quad((0,0), (1,1), "Div", palette.yellow)
-    quad((-1,1), (0,2), "Div", palette.yellow, label-pos: 0.3, "crossing")
+    quad((0, 0), (1, 1), "Div", palette.yellow)
+    quad((-1, 1), (0, 2), "Div", palette.yellow, label-pos: 0.3, "crossing")
 
-    quad((-1,2), (0,3), "Inv", palette.green)
-    quad((0,1), (+1,2), "Inv", palette.green, label-pos: 0.3)
+    quad((-1, 2), (0, 3), "Inv", palette.green)
+    quad((0, 1), (+1, 2), "Inv", palette.green, label-pos: 0.3)
 
-    quad((1,1), (0,2), "Assoc", palette.blue, label-pos: 0.3, "crossing")
+    quad((1, 1), (0, 2), "Assoc", palette.blue, label-pos: 0.3, "crossing")
   },
 )
 
@@ -262,7 +266,7 @@ I really like #link("https://en.wikipedia.org/wiki/Boolean_satisfiability_proble
 == Parallel SAT? Maybe?
 
 First, let's suppose #link(<assignment-power-sets>)[power sets of partial
-assignments] as the deciding factor for satisfiability.
+  assignments] as the deciding factor for satisfiability.
 
 DPLL and CDCL utilize procedures to disprove partial assignments based on these
 power sets. This is the logical precedence for their backtracking. The procedure
@@ -307,8 +311,7 @@ considered to duplicate work.
 
 For a unit partial assignment $rho = {m}$, the
 #link(<assignment-power-sets>)[set of refuting clauses] is ${{not m},
-emptyset}$.
-
+  emptyset}$.
 
 We have a split rule for variables $ell$ which can resolve to the empty clause:
 $
@@ -327,9 +330,9 @@ Given some variables $a$, $b$, and $c$, the set of possible refuting clauses
 for each partial assignment listed below is shown:
 #let unsat = $cancel(angle: #20deg, tack.l.long)$
 $
-  C_1 &=& {a}    &unsat {not a}, emptyset \
-  C_2 &=& {b}    &unsat {not b}, emptyset \
-  C_3 &=& {b, c} &unsat {not b, not c}, {not b}, {not c}, emptyset \
+  C_1 & = &    {a} & unsat {not a}, emptyset \
+  C_2 & = &    {b} & unsat {not b}, emptyset \
+  C_3 & = & {b, c} & unsat {not b, not c}, {not b}, {not c}, emptyset \
 $
 
 In other words, for any partial assignment, the set of clauses that can prove
@@ -345,35 +348,34 @@ that the power set of the negated assignment is disjoint with $|ell|^tack.b$.
 
 We also have an inductive means of constructing complete power sets:
 $
-  PP(emptyset) &= emptyset \
-  PP(C union {ell}) &= PP(C) union (PP(C) times {ell})
+       PP(emptyset) & = emptyset \
+  PP(C union {ell}) & = PP(C) union (PP(C) times {ell})
 $
 
 == Fixpoint resolution <fp-resolution>
 
 Defining a fixpoint ruleset for an instance $phi$ using
 #link(<resolution>)[the resolution rule] and first-order Horn clauses:
-#let fixedRes = $|ell|^tack.b$
+#let fixedRes = $Gamma^tack.b$
 $
-  fixedRes(C) &<- C in phi \
-  fixedRes(Gamma_1 union Gamma_2) &<-
-    fixedRes(Gamma_1 union {ell}) and
-    fixedRes(Gamma_2 union {not ell})
+                      fixedRes(C) & <- C in phi \
+  fixedRes(Gamma_1 union Gamma_2) & <-
+                                    fixedRes(Gamma_1 union {ell}) and
+                                    fixedRes(Gamma_2 union {not ell})
 $
 
 We can reframe this ruleset for non-empty clauses in terms of any literal $m in phi$:
 $
   fixedRes(Gamma_1 union Gamma_2 union {m})
-    & equiv (Gamma_1 union Gamma_2 union {m}) in phi \
-    & or fixedRes(Gamma_1 union {ell}) and fixedRes(Gamma_2 union {ell} union {m}) \
-    & or fixedRes(Gamma_1 union {ell} union {m}) and fixedRes(Gamma_2 union {ell})
+  & equiv (Gamma_1 union Gamma_2 union {m}) in phi \
+  & or fixedRes(Gamma_1 union {ell}) and fixedRes(Gamma_2 union {ell} union {m}) \
+  & or fixedRes(Gamma_1 union {ell} union {m}) and fixedRes(Gamma_2 union {ell})
 $
 
 and for the empty clause:
 $
-  fixedRes(emptyset)
-    & equiv emptyset in phi \
-    & or fixedRes({ell}) and fixedRes({not ell})
+  fixedRes(emptyset) & equiv emptyset in phi \
+                     & or fixedRes({ell}) and fixedRes({not ell})
 $
 
 Note that for the latter rule:
@@ -404,7 +406,9 @@ more opposing variable assignments is a tautology:
       $Gamma_1 union Gamma_2 union {m, not m}$,
       $Gamma_1 union { ell, m }$,
       $Gamma_2 union { not ell, not m }$,
-))))
+    ),
+  ),
+))
 
 The resolution rule itself is monotonic: every clause inferred through
 resolution is merely _implied_ by the two clauses it's constructed from.
@@ -421,7 +425,7 @@ directly added back to the set of known clauses.
 
 We attempt to find an *assignment*
 $
-  alpha : & V(phi) -> {tack.b, tack.t} \
+               alpha : & V(phi) -> {tack.b, tack.t} \
   forall v in V(phi) : & alpha(not v) = not alpha(v)
 $
 
@@ -437,8 +441,8 @@ $
 
 In the domain of SAT solving, we also often think about *partial assignments*:
 $
-  D & subset.eq V(phi) \
-  a_p & : D -> {tack.b, tack.t} \
+              D & subset.eq V(phi) \
+            a_p & : D -> {tack.b, tack.t} \
   forall v in D & : alpha_p (not v) = not alpha_p (v)
 $
 
