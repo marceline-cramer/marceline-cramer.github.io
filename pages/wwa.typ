@@ -3,7 +3,7 @@
 = Fixpoint resolution
 
 Defining a fixpoint ruleset for an instance $phi$ using
-#pageLink("rag")[the resolution rule] and first-order Horn clauses:
+#pageLink("rag", title: [the resolution rule]) and first-order Horn clauses:
 #let fixedRes = $Gamma^tack.b$
 $
                       fixedRes(C) & <- C in phi \

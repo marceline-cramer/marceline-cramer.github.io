@@ -97,9 +97,16 @@
 
 #let note = h.with(".note")
 
-#let pageLink(id, content) = {
+#let pageLink(id, title: none) = {
   links.update(tail => (id, ..tail))
-  context link(pageInfo.final().at(id).label, content)
+  context {
+    let info = pageInfo.final().at(id)
+    if title == none {
+      link(info.label, info.title)
+    } else {
+      link(info.label, title)
+    }
+  }
 }
 
 #let diagram(..args) = h(".center-content", html.frame(fletcher.diagram(edge-stroke: palette.fg0, ..args)))

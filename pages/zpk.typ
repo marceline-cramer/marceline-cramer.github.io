@@ -3,7 +3,7 @@
 
 = Monoid
 
-A *monoid* is an object $M$ within a #pageLink("fye")[monoidal category] with the morphisms
+A *monoid* is an object $M$ within a #pageLink("fye", title: [monoidal category]) with the morphisms
 
 $
    mu & : M times.o M -> M & "multiplication" \
