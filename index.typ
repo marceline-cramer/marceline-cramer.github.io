@@ -34,6 +34,9 @@ It highly annoys me when people write "alot" instead of "a lot," "too" when they
 - bundle Atkinson Hyperlegible in static files
 - add a basic personal directory (Discord, GitHub, LinkedIn)
 - add a new Typst-based resume
+- use show rules with labels instead of `pageLink()`
+  - allows links in Tinymist
+  - also look into using show rules to display page titles
 - render more than just the index page
 - make headings links to themselves
 - add custom `<head>` contents, then...
